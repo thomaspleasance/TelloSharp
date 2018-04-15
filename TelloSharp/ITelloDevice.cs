@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TelloSharp
 {
-    public interface ITelloDevice
+    public interface ITelloDevice: IDisposable
     {
         /// <summary>
         /// Auto takeoff
@@ -46,7 +46,7 @@ namespace TelloSharp
         /// 
         /// </summary>
         /// <returns></returns>
-        Task<int> GetSpeed();
+        Task<double> GetSpeed();
 
         /// <summary>
         /// 
