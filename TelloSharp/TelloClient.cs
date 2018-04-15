@@ -62,17 +62,21 @@ namespace TelloSharp
             int batteryLevel = 0;
 
             if (!int.TryParse(result, out batteryLevel))
-            {
                 throw new Exception("Unable to get battery level");
-            }
+
             return batteryLevel;
         }
 
         public async Task<TimeSpan> GetFlightTime()
         {
             var flightTime = await SendAsync("time?");
-            Console.WriteLine(flightTime);
-            return new TimeSpan();
+            flightTime = flightTime?.TrimEnd('s');
+            int flightTimeSec = 0;
+
+            if (!int.TryParse(flightTime, out flightTimeSec))
+                throw new Exception("Unable to get flight time");
+            
+            return TimeSpan.FromSeconds(flightTimeSec);
         }
 
         public async Task<double> GetSpeed()
@@ -81,9 +85,8 @@ namespace TelloSharp
             double speed = 0;
 
             if (!double.TryParse(result, out speed))
-            {
                 throw new Exception("Unable to get speed");
-            }
+
             return speed;
         }
 
